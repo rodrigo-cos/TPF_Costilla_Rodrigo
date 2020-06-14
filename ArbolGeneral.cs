@@ -59,6 +59,7 @@ namespace juegoIA
 			}
 		}
 		
+		
 		public void postOrden(){					
 			// Hago recursion en todos los hijos
 			if(!this.esHoja()){
@@ -85,6 +86,11 @@ namespace juegoIA
 						c.encolar(hijo);
 				}
 			}			
+		}
+		
+		public void inOrden()
+		{
+			this.raiz.inOrden();
 		}
 		
 		public int ancho(){

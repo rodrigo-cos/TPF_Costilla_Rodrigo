@@ -31,18 +31,18 @@ namespace juegoIA
 		public double ChancesDeGanar
 		{
 			get{return this.chancesDeGanar;}
-			set{this.chancesDeGanar=value;}
+			//set{this.chancesDeGanar=value;}
 		}
 		public List<int>CartasRestantesOponente
 		{
 			get{return this.cartasRestantesOponentes;}
-			set{this.cartasRestantesOponentes=value;}
+			//set{this.cartasRestantesOponentes=value;}
 		}
 		
 		public List<int>CartasRestantesAi
 		{
 			get{return this.cartasRestantesAI;}
-			set{this.cartasRestantesAI=value;}
+			//set{this.cartasRestantesAI=value;}
 		}
 	}
 }
