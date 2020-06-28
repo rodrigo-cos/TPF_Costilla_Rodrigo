@@ -16,33 +16,37 @@ namespace juegoIA
 	/// </summary>
 	public class DatosJugadas
 	{
-		private List<int>cartasRestantesOponentes;
-		private List<int>cartasRestantesAI;
-		private double chancesDeGanar=0.0;
-		private int sumaParcial;
+		int carta;
+		int limiteActual;
+		int ganadas;
+		bool esAi;
 		
-		public DatosJugadas(List<int> cartasRestantesOponentes,List<int>cartasRestanteasAi,int limite,int sumaPadre)
+		
+		public DatosJugadas(int carta,int limeactual,int ganadas,bool esAi)
 		{
-			this.cartasRestantesAI=cartasRestanteasAi;
-			this.cartasRestantesOponentes=cartasRestantesOponentes;
-			this.sumaParcial=sumaPadre;
+			this.carta=carta;
+			this.limiteActual=limeactual;
+			this.ganadas=ganadas;
+			this.esAi=esAi;
+		}
+
+		public int Carta
+		{
+			get{return this.carta;}
+		}
+		public int LimiteActual
+		{
+			get{return this.limiteActual;}
+		}
+		public bool EsAi
+		{
+			get{return this.esAi;}
+		}
+		public int Ganadas
+		{
+			get{return this.ganadas;}
+			set{this.ganadas=value;}
 		}
 		
-		public double ChancesDeGanar
-		{
-			get{return this.chancesDeGanar;}
-			//set{this.chancesDeGanar=value;}
-		}
-		public List<int>CartasRestantesOponente
-		{
-			get{return this.cartasRestantesOponentes;}
-			//set{this.cartasRestantesOponentes=value;}
-		}
-		
-		public List<int>CartasRestantesAi
-		{
-			get{return this.cartasRestantesAI;}
-			//set{this.cartasRestantesAI=value;}
-		}
 	}
 }

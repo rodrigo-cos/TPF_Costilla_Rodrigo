@@ -7,16 +7,18 @@ namespace juegoIA
 {
 	public class ComputerPlayer: Jugador
 	{
-		private ArbolGeneral<DatosJugadas> jugadas;
+		private ArbolGeneral<DatosJugadas> arbol;
 		
-		private ArbolGeneral<int>arbol;
+		//private ArbolGeneral<int>arbol;
 		
 		private List<int> naipes=new List<int>();
 		
 		
 		public ComputerPlayer()
 		{
-			arbol=new ArbolGeneral<int>(-1);
+			
+			//arbol=new ArbolGeneral<int>(-1);
+			
 		}
 		
 		/*public override void  incializar(List<int> cartasPropias, List<int> cartasOponente, int limite)
@@ -28,7 +30,7 @@ namespace juegoIA
 			
 		}*/
 		
-		public void inicializar(ArbolGeneral<DatosJugadas> nodoActual,List<int>cartasPropias,List<int>cartasOponentes)
+		/*public void inicializar(ArbolGeneral<DatosJugadas> nodoActual,List<int>cartasPropias,List<int>cartasOponentes)
 		{
 			foreach (int cartaOponente in cartasOponentes) {
 				ArbolGeneral<DatosJugadas>jugadaOponente=new ArbolGeneral<DatosJugadas>(new DatosJugadas(cartasOponentes,cartasPropias,0,0));
@@ -40,28 +42,30 @@ namespace juegoIA
 				inicializar(jugadaOponente,cartasOponentes,cartasPropias);
 					
 			}
-		}
+		}*/
 		
 		public override void incializar(List<int> cartasPropias,List<int> cartasOponentes,int limite)
 		{
 			//creo 2 listas y las agrego
+			DatosJugadas inicial=new DatosJugadas(-1,limite,0,true);
+			arbol=new ArbolGeneral<DatosJugadas>(inicial);
 			
-			List<int> cartPro=new List<int>();
+			/*List<int> cartPro=new List<int>();
 			List<int> cartOpo=new List<int>();
 			cartOpo.Add(1);
 			cartOpo.Add(3);
 			cartPro.Add(2);
-			cartPro.Add(4);
+			cartPro.Add(4);*/
 			
 			//llenarArbol(this.arbol,cartasPropias,cartasOponentes);
 			//this.arbol.porNiveles();
 			
-			llenarArbol(this.arbol,cartPro,cartOpo);
+			llenarArbol(this.arbol,cartasPropias,cartasOponentes);
 			
 			//Invoco el método porNiveles() de la clase ArbolGeneral 
-			this.arbol.porNiveles();
+			//this.arbol.porNiveles();
 			
-			Console.WriteLine(this.arbol.getHijos().Count);
+			Console.WriteLine("cantidad de cartas disponibles: " + this.arbol.getHijos().Count);
 		}
 		
 		public override int descartarUnaCarta()
@@ -84,14 +88,25 @@ namespace juegoIA
 			//implementar
 			
 		}
-		private void llenarArbol(ArbolGeneral<int>nodoCarta,List<int> cartasPropias,List<int> cartasOponente)
+		private void llenarArbol(ArbolGeneral<DatosJugadas>nodoCarta,List<int> cartasPropias,List<int> cartasOponente)
 		{
 			List<int>cartasPropiasSinJugada=new List<int>(cartasPropias);
-			cartasPropiasSinJugada.Remove(nodoCarta.getDatoRaiz());
+			
+			cartasPropiasSinJugada.Remove(nodoCarta.getDatoRaiz().Carta);
+			
+			int limiteActualizado=nodoCarta.getDatoRaiz().LimiteActual - nodoCarta.getDatoRaiz().Carta;
+			
+			if(limiteActualizado<0)
+			{
+				nodoCarta.getDatoRaiz().Ganadas=0;
+			}
+			else{
 			foreach (int cartaOponente in cartasOponente) {
-				ArbolGeneral<int> nodoCartaOponente=new ArbolGeneral<int>(cartaOponente);
+				DatosJugadas cartaJugadorOponente=new DatosJugadas(cartaOponente,limiteActualizado,0,!nodoCarta.getDatoRaiz().EsAi);
+				ArbolGeneral<DatosJugadas> nodoCartaOponente=new ArbolGeneral<DatosJugadas>(cartaJugadorOponente);
 				llenarArbol(nodoCartaOponente,cartasOponente,cartasPropiasSinJugada);
 				nodoCarta.agregarHijo(nodoCartaOponente);
+			}
 			}
 		}
 		
