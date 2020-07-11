@@ -30,19 +30,6 @@ namespace juegoIA
 			
 		}*/
 		
-		/*public void inicializar(ArbolGeneral<DatosJugadas> nodoActual,List<int>cartasPropias,List<int>cartasOponentes)
-		{
-			foreach (int cartaOponente in cartasOponentes) {
-				ArbolGeneral<DatosJugadas>jugadaOponente=new ArbolGeneral<DatosJugadas>(new DatosJugadas(cartasOponentes,cartasPropias,0,0));
-				nodoActual.getHijos().Add(jugadaOponente);
-				inicializar(jugadaOponente,cartasOponentes,cartasPropias);
-				//List<int> cartasDisponibles=cartasOponentes.CopyTo;
-				
-				
-				inicializar(jugadaOponente,cartasOponentes,cartasPropias);
-					
-			}
-		}*/
 		
 		public override void incializar(List<int> cartasPropias,List<int> cartasOponentes,int limite)
 		{
@@ -85,7 +72,19 @@ namespace juegoIA
 		
 		public override void cartaDelOponente(int carta)
 		{
+			
+		    //lo que hay que hacer es elegir al hijo que corresponde a esa carta
+			
 			//implementar
+			
+			foreach (ArbolGeneral<DatosJugadas> hijo in this.arbol.getHijos()) {
+				if(hijo.getDatoRaiz().Carta==carta)
+				{
+					this.arbol=hijo;
+					return;
+				}
+			}
+			
 			
 		}
 		private void llenarArbol(ArbolGeneral<DatosJugadas>nodoCarta,List<int> cartasPropias,List<int> cartasOponente)
