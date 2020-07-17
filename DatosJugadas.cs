@@ -47,6 +47,10 @@ namespace juegoIA
 			get{return this.ganadas;}
 			set{this.ganadas=value;}
 		}
-		
+		public override string ToString()
+		{
+			return string.Format("[DatosJugadas Carta={0}, LimiteActual={1}, Ganadas={2}, EsAi={3}]", carta, limiteActual, ganadas, esAi);
+		}
+
 	}
 }

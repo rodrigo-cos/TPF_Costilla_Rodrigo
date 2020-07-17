@@ -14,21 +14,14 @@ namespace juegoIA
 		private List<int> naipes=new List<int>();
 		
 		
+		
+		
 		public ComputerPlayer()
 		{
 			
 			//arbol=new ArbolGeneral<int>(-1);
 			
 		}
-		
-		/*public override void  incializar(List<int> cartasPropias, List<int> cartasOponente, int limite)
-		{
-			//Implementar
-			
-			this.jugadas=new ArbolGeneral<DatosJugadas>(new DatosJugadas(cartasOponente,cartasPropias,limite,0));
-			//inicializar(this.jugadas);
-			
-		}*/
 		
 		
 		public override void incializar(List<int> cartasPropias,List<int> cartasOponentes,int limite)
@@ -47,19 +40,24 @@ namespace juegoIA
 			//llenarArbol(this.arbol,cartasPropias,cartasOponentes);
 			//this.arbol.porNiveles();
 			
+			this.naipes=cartasPropias;
+			
+			
 			llenarArbol(this.arbol,cartasPropias,cartasOponentes);
 			
 			//Invoco el método porNiveles() de la clase ArbolGeneral 
 			//this.arbol.porNiveles();
 			
-			Console.WriteLine("cantidad de cartas disponibles: " + this.arbol.getHijos().Count);
+			//Console.WriteLine("cantidad de cartas disponibles: " + this.arbol.getHijos().Count);
+			
+			Console.WriteLine("cantidad de victorias en total para la pc: {0} ",this.arbol.getDatoRaiz().Ganadas);
+			
 		}
 		
 		public override int descartarUnaCarta()
 		{
 			//Implementar
-			
-			Console.WriteLine("Naipes disponibles (Computer):");
+				Console.WriteLine("Naipes disponibles (Computer):");
 			for (int i = 0; i < naipes.Count; i++) {
 				Console.WriteLine(naipes[i].ToString());
 				if (i<naipes.Count-1) {
@@ -67,13 +65,25 @@ namespace juegoIA
 				}
 			}
 			
-			return 0;
+			Console.WriteLine();
+			int max=-99999;
+			ArbolGeneral<DatosJugadas>mejorEle=new ArbolGeneral<DatosJugadas>(null);
+				
+				foreach (ArbolGeneral<DatosJugadas> hijo in this.arbol.getHijos()) {
+				if(hijo.getDatoRaiz().Ganadas>max)
+					max=hijo.getDatoRaiz().Ganadas;
+				    mejorEle=hijo;
+				}
+			
+		
+			this.arbol=mejorEle;
+			Console.WriteLine("carta jugada {0}",mejorEle.getDatoRaiz().Carta);
+			return mejorEle.getDatoRaiz().Carta;
 		}
 		
 		public override void cartaDelOponente(int carta)
 		{
-			
-		    //lo que hay que hacer es elegir al hijo que corresponde a esa carta
+			//lo que hay que hacer es elegir al hijo que corresponde a esa carta
 			
 			//implementar
 			
@@ -97,17 +107,21 @@ namespace juegoIA
 			
 			if(limiteActualizado<0)
 			{
-				nodoCarta.getDatoRaiz().Ganadas=0;
-			}
-			else{
+				if(nodoCarta.getDatoRaiz().EsAi){
+					nodoCarta.getDatoRaiz().Ganadas=-1;
+				}else{
+			
+				nodoCarta.getDatoRaiz().Ganadas=1;
+				}
+		}else{
 			foreach (int cartaOponente in cartasOponente) {
 				DatosJugadas cartaJugadorOponente=new DatosJugadas(cartaOponente,limiteActualizado,0,!nodoCarta.getDatoRaiz().EsAi);
 				ArbolGeneral<DatosJugadas> nodoCartaOponente=new ArbolGeneral<DatosJugadas>(cartaJugadorOponente);
 				llenarArbol(nodoCartaOponente,cartasOponente,cartasPropiasSinJugada);
 				nodoCarta.agregarHijo(nodoCartaOponente);
-			}
-			}
+				nodoCarta.getDatoRaiz().Ganadas+=nodoCartaOponente.getDatoRaiz().Ganadas;
 		}
+				//Console.WriteLine(nodoCarta.getDatoRaiz());
 		
 	}
-}
+		}}}
